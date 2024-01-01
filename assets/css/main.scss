@@ -18,7 +18,23 @@ h1 {
 }
 
 a {
+  position: relative;
   color: $mainWhite;
   font-weight: 300;
   text-decoration: none;
+}
+
+a::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: $mainWhite;
+  transition: .5s all ease;
+}
+
+a:hover::before {
+  width: 100%;
 }
