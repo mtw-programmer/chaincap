@@ -13,6 +13,9 @@
     </div>
     <nuxt-link to="/faq#logging-in" class="account-link">Need help with logging in?</nuxt-link>
     <button class="auth-btn">Authenticate</button>
+    <footer>
+      <span>ChainCAP Ventures 2023 &copy; Application in development mode only.</span>
+    </footer>
   </div>
 </template>
 
