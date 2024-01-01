@@ -38,3 +38,27 @@ a::before {
 a:hover::before {
   width: 100%;
 }
+
+button {
+  display: block;
+  position: relative;
+  border-radius: 5px;
+  border: 2px solid $mainRed !important;
+  text-shadow: 0 0 5px rgba(0, 0, 0, .4);
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: $mainRed;
+  transition: .4s all ease;
+  z-index: -1;
+}
+
+button:hover::before {
+  width: 100%;
+}
