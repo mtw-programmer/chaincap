@@ -11,17 +11,19 @@
       <span>0x38585389934</span>
       <i class="fa-regular fa-copy"></i>
     </div>
+    <nuxt-link to="/faq#logging-in" class="account-link">Need help with logging in?</nuxt-link>
+    <button class="auth-btn">Authenticate</button>
   </div>
 </template>
 
 <style lang="scss" scoped>
   @import '~/assets/css/variables/main.scss';
-  .login-container {
+  .login-container .login-header, .account-copy {
     text-align: center;
   }
   .login-header {
-    margin-top: 27vh;
-    margin-bottom: 10vh;
+    margin-top: 23vh;
+    margin-bottom: 7vh;
   }
 
   .account-copy {
@@ -67,5 +69,17 @@
     p {
       color: $mainRed;
     }
+  }
+
+  .account-link {
+    text-align: left;
+    margin: 0;
+    left: 5%;
+  }
+
+  .auth-btn {
+    margin: 0 auto;
+    padding: 15px 20px;
+    margin-top: 5vh;
   }
 </style>
