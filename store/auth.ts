@@ -1,4 +1,4 @@
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators';
+import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators';
 
 @Module({ name: 'auth', namespaced: true })
 class AuthModule extends VuexModule {
