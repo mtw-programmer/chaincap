@@ -23,6 +23,10 @@ export default {
 
   store: '~/store/index.ts',
 
+  router: {
+    middleware: ['authenticated'],
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/css/variables/main.scss', '~/assets/css/main.scss'],
 
