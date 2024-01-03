@@ -14,8 +14,13 @@ class AuthModule extends VuexModule {
   }
 
   @Action
-  public login() {
-    console.log('test');
+  public async login() {
+    try {
+      const [address] = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+      this.SET_ACCOUNT_ADDRESS(address);
+    } catch (ex:any) {
+      console.error(ex.message);
+    }
   }
 }
 
