@@ -42,9 +42,13 @@ a:hover::before {
 button {
   display: block;
   position: relative;
+  background-color: transparent;
+  color: $mainFontColor;
   border-radius: 5px;
   border: 2px solid $mainRed !important;
   text-shadow: 0 0 5px rgba(0, 0, 0, .4);
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 button::before {
