@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   },
 
   router: {
-    middleware: ['authenticated'],
+    middleware: ['authorization'],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
