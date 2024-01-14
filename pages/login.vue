@@ -12,7 +12,8 @@
       <i class="fa-regular fa-copy"></i>
     </div>
     <nuxt-link to="/faq#logging-in" class="account-link">Need help with logging in?</nuxt-link>
-    <button class="auth-btn">Authenticate</button>
+    <span class="form-message error" v-if="message.error">{{ message.error }}</span>
+    <button class="auth-btn" @click="login">Authenticate</button>
     <footer>
       <span>ChainCAP Ventures 2023 &copy; Application in development mode only.</span>
     </footer>
@@ -85,4 +86,28 @@
     padding: 15px 20px;
     margin-top: 5vh;
   }
+
+  .form-message {
+    display: block;
+    margin: 5vh auto 2vh auto;
+    text-align: center;
+  }
 </style>
+
+<script setup lang="ts">
+import { reactive } from 'vue';
+import useLogin from '~/utils/login';
+
+const message = reactive({
+  error: '',
+});
+
+const login = async () => {
+  const response = await useLogin();
+  const { error } = response;
+
+  if (error) {
+    message.error = error;
+  }
+};
+</script>
