@@ -103,6 +103,7 @@ const message = reactive({
 });
 
 const login = async () => {
+  message.error = '';
   const response = await useLogin();
   const { error } = response;
 
