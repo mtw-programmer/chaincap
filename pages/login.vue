@@ -15,7 +15,7 @@
     <span class="form-message error" v-if="message.error">{{ message.error }}</span>
     <button class="auth-btn" @click="login">Authenticate</button>
     <footer>
-      <span>ChainCAP Ventures 2023 &copy; Application in development mode only.</span>
+      <span>ChainCAP Ventures {{ new Date().getFullYear() }} &copy; Application in development mode only.</span>
     </footer>
   </div>
 </template>
