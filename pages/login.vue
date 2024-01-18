@@ -94,9 +94,10 @@
   }
 </style>
 
+
 <script setup lang="ts">
 import { reactive } from 'vue';
-import useLogin from '~/utils/login';
+import { useLogin } from '~/utils/login';
 
 const message = reactive({
   error: '',
@@ -105,10 +106,12 @@ const message = reactive({
 const login = async () => {
   message.error = '';
   const response = await useLogin();
-  const { error } = response;
+  if (typeof response !== 'undefined') {
+    const { error } = response;
 
-  if (error) {
-    message.error = error;
+    if (error) {
+      message.error = error;
+    }
   }
 };
 </script>
