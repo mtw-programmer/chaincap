@@ -1,4 +1,23 @@
-export default async () => {
+import { provideApolloClient, useQuery } from '@vue/apollo-composable';
+import { watch } from 'vue';
+import gql from 'graphql-tag';
+
+import { ApolloClient, InMemoryCache } from '@apollo/client/core';
+import { createHttpLink } from '@apollo/client/link/http';
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000/graphql',
+});
+
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+  credentials: 'include',
+});
+
+provideApolloClient(apolloClient);
+
+export const useLogin = async () => {
   try {
     if (!process.client) {
       return { error: 'Something went wrong! Please, try again later.' };
@@ -17,10 +36,35 @@ export default async () => {
       params: [message, userAddress],
     });
 
-    // API Validation
+    const authenticationQuery = gql`
+      query getSuccessMock {
+        getMockSuccess {
+          status
+          msg
+        }
+      }
+    `;
 
-    return navigateTo('/dashboard');
+    const { result, loading } = useQuery(authenticationQuery);
+
+    console.log(loading.value);
+
+    watch(result, () => {
+      if (result.value.getMockSuccess.status == 200) {
+        console.log(loading.value);
+        return navigateTo('/dashboard');
+      }
+    });
+
+    if (!result.value) {
+      return { error: 'No' };
+    } else if (result.value.getMockSuccess.status != 200) {
+      return { error: 'No' };
+    } else if (result.value.getMockSuccess.status == 200) {
+      console.log(loading.value);
+      return navigateTo('/dashboard');
+    }
   } catch (ex) {
-    return { error: 'There was a problem with your authentication.' };
+    return { error: `Couldn't authenticate with your wallet.` };
   }
 };
