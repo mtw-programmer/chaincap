@@ -1,5 +1,4 @@
 import { provideApolloClient, useQuery } from '@vue/apollo-composable';
-import { watch } from 'vue';
 import gql from 'graphql-tag';
 
 import { ApolloClient, InMemoryCache } from '@apollo/client/core';
@@ -17,7 +16,7 @@ const apolloClient = new ApolloClient({
 
 provideApolloClient(apolloClient);
 
-export const useLogin = async () => {
+export const getQueryResponse = async ():Promise<any> => {
   try {
     if (!process.client) {
       return { error: 'Something went wrong! Please, try again later.' };
@@ -37,7 +36,7 @@ export const useLogin = async () => {
     });
 
     const authenticationQuery = gql`
-      query getSuccessMock {
+      query getMockSuccess {
         getMockSuccess {
           status
           msg
@@ -45,25 +44,13 @@ export const useLogin = async () => {
       }
     `;
 
-    const { result, loading } = useQuery(authenticationQuery);
-
-    console.log(loading.value);
-
-    watch(result, () => {
-      if (result.value.getMockSuccess.status == 200) {
-        console.log(loading.value);
-        return navigateTo('/dashboard');
-      }
+    const response = useQuery(authenticationQuery, {
+      notifyOnNetworkStatusChange: true,
+      retry: false,
+      suspense: false,
     });
 
-    if (!result.value) {
-      return { error: 'No' };
-    } else if (result.value.getMockSuccess.status != 200) {
-      return { error: 'No' };
-    } else if (result.value.getMockSuccess.status == 200) {
-      console.log(loading.value);
-      return navigateTo('/dashboard');
-    }
+    return response;
   } catch (ex) {
     return { error: `Couldn't authenticate with your wallet.` };
   }
