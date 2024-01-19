@@ -111,7 +111,7 @@
 
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
-import { getQueryResponse } from '~/utils/login';
+import { getLoginResponse } from '~/utils/login';
 import { HalfCircleSpinner } from 'epic-spinners';
 
 const form = reactive({
@@ -124,7 +124,7 @@ const login = async () => {
   form.error = '';
   form.loading = true;
 
-  const { result, loading, error } = await getQueryResponse();
+  const { result, loading, error } = await getLoginResponse();
 
   const displayError = (error:string) => {
     form.loading = false;

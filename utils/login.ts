@@ -16,7 +16,7 @@ const apolloClient = new ApolloClient({
 
 provideApolloClient(apolloClient);
 
-export const getQueryResponse = async ():Promise<any> => {
+export const getLoginResponse = async ():Promise<any> => {
   try {
     if (!process.client) {
       return { error: 'Something went wrong! Please, try again later.' };
