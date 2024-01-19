@@ -146,23 +146,22 @@ const login = async () => {
     }
   };
 
-  const getErrors = () => {
+  const handleErrors = () => {
     const { error } = verifyLogin();
-    console.log(loading.value);
     if (error) {
       displayError(error);
     }
   };
 
   if (!loading.value) {
-    getErrors();
+    handleErrors();
   } else {
     watch(result, () => {
-      getErrors();
+      handleErrors();
     }, { deep: true });
 
     const timeOut = setTimeout(() => {
-      getErrors();
+      handleErrors();
       clearTimeout(timeOut);
     }, 10000);
   }
