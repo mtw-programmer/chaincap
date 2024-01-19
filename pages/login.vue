@@ -124,7 +124,17 @@ const login = async () => {
   form.error = '';
   form.loading = true;
 
-  const { result, loading } = await getQueryResponse();
+  const { result, loading, error } = await getQueryResponse();
+
+  const displayError = (error:string) => {
+    form.loading = false;
+    form.error = error;
+    return;
+  }
+
+  if (typeof error !== 'undefined') {
+    displayError(error);
+  }
 
   const verifyLogin = () => {
     if (typeof result.value === 'undefined') {
@@ -140,8 +150,7 @@ const login = async () => {
     const { error } = verifyLogin();
     console.log(loading.value);
     if (error) {
-      form.loading = false;
-      form.error = error;
+      displayError(error);
     }
   };
 
