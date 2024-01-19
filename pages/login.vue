@@ -129,9 +129,9 @@ const login = async () => {
   const verifyLogin = () => {
     if (typeof result.value === 'undefined') {
       return { error: 'Something went wrong! Please, try again later.' };
-    } else if (result.value && result.value.getMockSuccess.status !== 200) {
-      return { error: result.value.getMockSuccess.msg };
-    } else if (result.value && result.value.getMockSuccess.status == 200) {
+    } else if (result.value && result.value.login.status !== 200) {
+      return { error: result.value.login.msg };
+    } else if (result.value && result.value.login.status == 200) {
       return navigateTo('/dashboard');
     }
   };

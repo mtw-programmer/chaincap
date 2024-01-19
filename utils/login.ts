@@ -22,22 +22,22 @@ export const getQueryResponse = async ():Promise<any> => {
       return { error: 'Something went wrong! Please, try again later.' };
     }
     
-    if (!(window as any).ethereum) {
+    if (!window.ethereum) {
       return { error: 'MetaMask not detected. Please, install it to proceed.' };
     }
 
-    const accounts = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     const userAddress = accounts[0];
     
     const message = 'Authenticate to ChainCAP Ventures';
-    const signature = await (window as any).ethereum.request({
+    const signature = await window.ethereum.request({
       method: 'personal_sign',
       params: [message, userAddress],
     });
 
     const authenticationQuery = gql`
-      query getMockSuccess {
-        getMockSuccess {
+      query login {
+        login {
           status
           msg
         }
