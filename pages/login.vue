@@ -12,8 +12,15 @@
       <i class="fa-regular fa-copy"></i>
     </div>
     <nuxt-link to="/faq#logging-in" class="account-link">Need help with logging in?</nuxt-link>
-    <span class="form-message error" v-if="message.error">{{ message.error }}</span>
-    <button class="auth-btn" @click="login">Authenticate</button>
+    <span class="form-message error" v-if="form.error && !form.loading">{{ form.error }}</span>
+    <button
+      :class="form.loading ? 'auth-btn auth-btn-disabled' : 'auth-btn'"
+      :disabled="form.loading"
+      @click="login"
+    >
+      <span v-if="!form.loading">Authenticate</span>
+      <HalfCircleSpinner v-if="form.loading" color=#dfeed8 :size=22 class="formBtnSpinner" />
+    </button>
     <footer>
       <span>ChainCAP Ventures {{ new Date().getFullYear() }} &copy; Application in development mode only.</span>
     </footer>
@@ -92,26 +99,64 @@
     margin: 5vh auto 2vh auto;
     text-align: center;
   }
+
+  .auth-btn-disabled {
+    cursor: default;
+  }
+  .auth-btn-disabled:hover::before {
+    content: none;
+  }
 </style>
 
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { useLogin } from '~/utils/login';
+import { reactive, watch } from 'vue';
+import { getQueryResponse } from '~/utils/login';
+import { HalfCircleSpinner } from 'epic-spinners';
 
-const message = reactive({
+const form = reactive({
   error: '',
-});
+  loading: false,
+})
 
 const login = async () => {
-  message.error = '';
-  const response = await useLogin();
-  if (typeof response !== 'undefined') {
-    const { error } = response;
+  if (form.loading) return;
+  form.error = '';
+  form.loading = true;
 
-    if (error) {
-      message.error = error;
+  const { result, loading } = await getQueryResponse();
+
+  const verifyLogin = () => {
+    if (typeof result.value === 'undefined') {
+      return { error: 'Something went wrong! Please, try again later.' };
+    } else if (result.value && result.value.getMockSuccess.status !== 200) {
+      return { error: result.value.getMockSuccess.msg };
+    } else if (result.value && result.value.getMockSuccess.status == 200) {
+      return navigateTo('/dashboard');
     }
+  };
+
+  const getErrors = () => {
+    const { error } = verifyLogin();
+    console.log(loading.value);
+    if (error) {
+      form.loading = false;
+      form.error = error;
+    }
+  };
+
+  if (!loading.value) {
+    getErrors();
+  } else {
+    watch(result, () => {
+      getErrors();
+    }, { deep: true });
+
+    const timeOut = setTimeout(() => {
+      getErrors();
+      clearTimeout(timeOut);
+    }, 10000);
   }
+
 };
 </script>
