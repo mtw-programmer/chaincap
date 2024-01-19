@@ -1,8 +1,18 @@
 import { defineNuxtConfig } from 'nuxt/config';
+import { ApolloClient, InMemoryCache } from '@apollo/client/core';
+import { createHttpLink } from '@apollo/client/link/http';
+
+const httpLink = createHttpLink({
+  uri: process.env.API_BASE_URL,
+});
+
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+  credentials: 'include',
+});
 
 export default defineNuxtConfig({
-  store: '~/store/index.ts',
-
   app: {
     head: {
       title: 'ChainCAP Ventures',
@@ -26,6 +36,10 @@ export default defineNuxtConfig({
     },
   },
 
+  apollo: {
+    client: apolloClient,
+  },
+
   router: {
     middleware: ['authorization'],
   },
@@ -46,5 +60,10 @@ export default defineNuxtConfig({
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [
+      '@apollo/client',
+      'ts-invariant/process',
+    ],
+  },
 });
