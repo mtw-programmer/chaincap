@@ -1,15 +1,15 @@
 <template>
   <div class="login-container">
     <h1 class="login-header">Hello, sign in using your crypto wallet</h1>
-    <div class="account-copy expert">
+    <div class="account-copy expert" v-if="address.expert">
       <p>Expert Account</p>
-      <span>0x38585389934</span>
-      <i class="fa-regular fa-copy"></i>
+      <span>{{ address.expert }}</span>
+      <i class="fa-regular fa-copy" @click="copy('expert')"></i>
     </div>
-    <div class="account-copy">
+    <div class="account-copy" v-if="address.regular">
       <p>Non-expert Account</p>
-      <span>0x38585389934</span>
-      <i class="fa-regular fa-copy"></i>
+      <span>{{ address.regular }}</span>
+      <i class="fa-regular fa-copy" @click="copy('regular')"></i>
     </div>
     <nuxt-link to="/faq#logging-in" class="account-link">Need help with logging in?</nuxt-link>
     <span class="form-message error" v-if="form.error && !form.loading">{{ form.error }}</span>
@@ -117,7 +117,18 @@ import { HalfCircleSpinner } from 'epic-spinners';
 const form = reactive({
   error: '',
   loading: false,
-})
+});
+
+const address = reactive({
+  regular: '0x38585389934',
+  expert: '0x231498932495'
+});
+
+const copy = (type:'expert'|'regular') => {
+  navigator.clipboard.writeText(
+    type === 'expert' ? address.expert : address.regular
+  );
+};
 
 const login = async () => {
   if (form.loading) return;
@@ -165,6 +176,5 @@ const login = async () => {
       clearTimeout(timeOut);
     }, 10000);
   }
-
 };
 </script>
