@@ -39,6 +39,6 @@ export const getAddresses = async ():Promise<any> => {
 
     return response;
   } catch (ex) {
-    return { error: `Couldn't authenticate with your wallet.` };
+    return { error: `Couldn't fetch addresses.` };
   }
 };
