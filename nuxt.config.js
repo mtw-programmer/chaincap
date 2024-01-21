@@ -1,16 +1,4 @@
 import { defineNuxtConfig } from 'nuxt/config';
-import { ApolloClient, InMemoryCache } from '@apollo/client/core';
-import { createHttpLink } from '@apollo/client/link/http';
-
-const httpLink = createHttpLink({
-  uri: process.env.API_BASE_URL,
-});
-
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-  credentials: 'include',
-});
 
 export default defineNuxtConfig({
   app: {
@@ -36,8 +24,10 @@ export default defineNuxtConfig({
     },
   },
 
-  apollo: {
-    client: apolloClient,
+  runtimeConfig: {
+    public: {
+      API_BASE_URL: process.env.API_BASE_URL,
+    },
   },
 
   router: {
@@ -48,7 +38,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/variables/main.scss', '~/assets/css/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/apollo.ts'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

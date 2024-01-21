@@ -1,20 +1,5 @@
-import { provideApolloClient, useQuery } from '@vue/apollo-composable';
+import { useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
-
-import { ApolloClient, InMemoryCache } from '@apollo/client/core';
-import { createHttpLink } from '@apollo/client/link/http';
-
-const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
-});
-
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-  credentials: 'include',
-});
-
-provideApolloClient(apolloClient);
 
 export const getLoginResponse = async ():Promise<any> => {
   try {
