@@ -3,8 +3,10 @@ import { provideApolloClient } from '@vue/apollo-composable';
 import { createHttpLink } from '@apollo/client/link/http';
 
 export default defineNuxtPlugin(() => {
+  const runTimeConfig = useRuntimeConfig();
+
   const httpLink = createHttpLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: runTimeConfig.public.API_BASE_URL,
   });
 
   const apolloClient = new ApolloClient({
