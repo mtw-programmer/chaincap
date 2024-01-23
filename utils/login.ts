@@ -1,7 +1,8 @@
 import { useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
+import { QueryReturn } from '~/types/queryReturn';
 
-export const getLoginResponse = async ():Promise<any> => {
+export const getLoginResponse = async ():Promise<QueryReturn|{ error: string }> => {
   try {
     if (!process.client) {
       return { error: 'Something went wrong! Please, try again later.' };

@@ -1,7 +1,8 @@
 import { useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
+import { QueryReturn } from '~/types/queryReturn';
 
-export const getAddresses = async ():Promise<any> => {
+export const getAddresses = async ():Promise<QueryReturn|{ error: string }> => {
   try {
     const authenticationQuery = gql`
       query addresses {
