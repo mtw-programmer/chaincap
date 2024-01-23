@@ -52,7 +52,6 @@ export default defineNuxtConfig({
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [
-      '@apollo/client',
       'ts-invariant/process',
     ],
   },
