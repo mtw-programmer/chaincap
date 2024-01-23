@@ -5,11 +5,13 @@
       <p>Expert Account</p>
       <span>{{ address.expert }}</span>
       <i class="fa-regular fa-copy" @click="copy('expert')"></i>
+      <div class="copy-success-message expert" :style="{ opacity: copyVisibility.expert }">Copied!</div>
     </div>
     <div class="account-copy">
       <p>Non-expert Account</p>
       <span>{{ address.regular }}</span>
       <i class="fa-regular fa-copy" @click="copy('regular')"></i>
+      <div class="copy-success-message" :style="{ opacity: copyVisibility.regular }">Copied!</div>
     </div>
     <nuxt-link to="/faq#logging-in" class="account-link">Need help with logging in?</nuxt-link>
     <span class="form-message error" v-if="form.error && !form.loading">{{ form.error }}</span>
@@ -106,6 +108,27 @@
   .auth-btn-disabled:hover::before {
     content: none;
   }
+
+  .copy-success-message {
+    display: block;
+    opacity: 0;
+    user-select: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    right: -15px;
+    transform: translateY(-50%);
+    background-color: $mainWhite;
+    color: $mainBackground;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: 1s all ease;
+    z-index: 1;
+  }
+
+  .copy-success-message.expert {
+    background-color: $mainRed;
+    color: $mainWhite;
+  }
 </style>
 
 
@@ -123,6 +146,11 @@ const form = reactive({
 const address = reactive({
   regular: '',
   expert: ''
+});
+
+const copyVisibility = reactive({
+  expert: 0,
+  regular: 0
 });
 
 const fetchAddresses = async () => {
@@ -148,9 +176,21 @@ const fetchAddresses = async () => {
 fetchAddresses();
 
 const copy = (type:'expert'|'regular') => {
-  navigator.clipboard.writeText(
-    type === 'expert' ? address.expert : address.regular
-  );
+  if (type === 'expert') {
+    navigator.clipboard.writeText(
+      address.expert
+    );
+    copyVisibility.expert = 1;
+    const timeout = setTimeout(() => copyVisibility.expert = 0, 1000);
+    setTimeout(() => clearTimeout(timeout), 1000)
+  } else {
+    navigator.clipboard.writeText(
+      address.regular
+    );
+    copyVisibility.regular = 1;
+    const timeout = setTimeout(() => copyVisibility.regular = 0, 1000);
+    setTimeout(() => clearTimeout(timeout), 1000);
+  }
 };
 
 const login = async () => {
