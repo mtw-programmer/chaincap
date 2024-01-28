@@ -216,7 +216,7 @@ const login = async () => {
     } else if (result.value && result.value.login.status !== 200) {
       return { error: result.value.login.msg };
     } else if (result.value && result.value.login.status == 200) {
-      return navigateTo('/dashboard');
+      return navigateTo('/');
     }
   };
 
