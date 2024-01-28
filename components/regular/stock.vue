@@ -15,11 +15,11 @@
     </div>
     <div class="buy-container">
       <h3 class="buy-price">{{ props.buy }}</h3>
-      <span class="buy-text">Buy</span>
+      <span class="buy-text gray">Buy</span>
     </div>
     <div class="sell-container">
       <h3 class="sell-price">{{ props.sell }}</h3>
-      <span class="sell-text">Sell</span>
+      <span class="sell-text gray">Sell</span>
     </div>
     <div class="mark-favourite">
       <i :class="{
@@ -62,10 +62,6 @@
       margin-top: 3px;
       font-size: 10px;
       text-align: center;
-    }
-
-    .buy-text, .sell-text {
-      color: $mainGray;
     }
 
     .name-change, .buy-container, .sell-container, .mark-favourite {
