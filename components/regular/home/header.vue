@@ -21,6 +21,7 @@
     display: flex;
     padding: 15px 3vw;
     width: 100vw;
+    margin-bottom: 30px;
   }
 
   .search {
@@ -66,7 +67,7 @@
   }
 
   .benefits-title {
-    color: #a5a4a4;
+    color: $mainGray;
   }
 
   .benefits-amount {
