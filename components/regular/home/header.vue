@@ -5,7 +5,7 @@
       <span class="account-amount">128.0000001 ETH</span>
       <div class="benefits">
         <span class="benefits-title">Benefits: </span>
-        <span class="benefits-amount">0.0000006</span>
+        <span class="green">0.0000006</span>
       </div>
     </div>
     <div class="search">
@@ -68,9 +68,5 @@
 
   .benefits-title {
     color: $mainGray;
-  }
-
-  .benefits-amount {
-    color: $mainGreen;
   }
 </style>
