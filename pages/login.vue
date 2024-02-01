@@ -14,7 +14,7 @@
       <div class="copy-success-message" :style="{ opacity: copyVisibility.regular }">Copied!</div>
     </div>
     <nuxt-link to="/faq#logging-in" class="account-link">Need help with logging in?</nuxt-link>
-    <span class="form-message error" v-if="form.error && !form.loading">{{ form.error }}</span>
+    <span class="form-message red" v-if="form.error && !form.loading">{{ form.error }}</span>
     <button
       :class="form.loading ? 'auth-btn auth-btn-disabled' : 'auth-btn'"
       :disabled="form.loading"
@@ -216,7 +216,7 @@ const login = async () => {
     } else if (result.value && result.value.login.status !== 200) {
       return { error: result.value.login.msg };
     } else if (result.value && result.value.login.status == 200) {
-      return navigateTo('/dashboard');
+      return navigateTo('/');
     }
   };
 
